@@ -1,35 +1,58 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from matplotlib import use
-from numpy import save
+from requests import request
 from .models import *
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import *
+from django.db.models import Q
+from django.http import Http404
+from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 
 menu = [{'title': 'It-Ground', 'url_name': 'home_page'},
         {'title1': 'Товары', 'url_name': 'about_view'},
         {'title2': 'Категории', 'url_name': 'check_products'}]
+        
+
+class HomePage(ListView):
+    model = Item      
+    template_name = 'home_page.html'
+    paginate_by = 6
+    context_object_name = 'items'       
+    extra_context = {'title': 'Главная страница'} 
+
+     # функция формирует статический и динамический контекст, который далее передается в шаблон
+    def get_context_data(self, *args, **kwargs):
+
+        context = super().get_context_data(**kwargs)       
+
+        # добавление новой переменной в контекст
+        context['menu'] = menu 
+        context['cat_selected'] = 0
+
+        return context
 
 
-def home_page(request):
+class Search(ListView):
 
-    items = Item.objects.all()
-    categories = Category.objects.all()
- 
-    context = {
-        'items': items,
-        'menu': menu,
-        'title': 'Главная страница',
-        'cats': categories,
-        'title': 'Главная страница',
-        'cat_selected': 0,
-    }
+    model = Item
 
-    return render(request, 'home_page.html', context=context)
+    template_name = 'home_page.html'
+    paginate_by = 6
+    context_object_name = 'items' 
+
+
+    def get_queryset(self):
+        return Item.objects.filter(title__icontains=self.request.GET.get("q"))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["q"] = f'q={self.request.GET.get("q")}&'
+        return context
 
 
 def item_page(request, item_slug):
@@ -62,13 +85,13 @@ def add_to_cart(request, item_slug):
         else:
             messages.info(request, 'Your item was added to your cart!') 
             order.items.add(order_item)
-            return redirect('item-page', item_slug)
+            return redirect('summary-page')
     else:
         ordered_date = timezone.now()                                                       
         order = Order.objects.create(user=request.user, ordered_date=ordered_date)          
         order.items.add(order_item)
         messages.info(request, 'Your item was added to your cart!')                                                         
-    return redirect('item-page', item_slug) 
+    return redirect('summary-page') 
 
 
 def remove_from_cart(request, item_slug):
@@ -86,15 +109,15 @@ def remove_from_cart(request, item_slug):
             order.items.remove(order_item)
             
             messages.info(request, 'Your item was successfully removed from your cart!')
-            return redirect('item-page', item_slug)
+            return redirect('summary-page')
         
         else:
             messages.info(request, 'Your item was not in your cart')
-            return redirect('item-page', item_slug)                                                                   
+            return redirect('summary-page')                                                                   
     
     else:   
         messages.info(request, 'Your do not have an active order')                                                                                
-        return redirect('item-page', item_slug) 
+        return redirect('summary-page') 
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -146,7 +169,7 @@ def remove_single_item_from_cart(request, item_slug):
         
         else:
             messages.info(request, "This item was not in your cart")
-            return redirect('item-page', item_slug) 
+            return redirect('summary-page', item_slug) 
     
     else:
         messages.info(request, "You do not have an active order")
@@ -154,20 +177,23 @@ def remove_single_item_from_cart(request, item_slug):
 
 
 class CheckoutView(View):
+
     # метод get
     def get(self, *args, **kwargs):
         
         form = CheckoutForms()  # получение формы 
+        order = Order.objects.get(user=self.request.user, ordered=False)
 
         context = {
             'forms': form,
+            'order': order,
         }
 
         return render(self.request, 'checkout_page.html', context=context)
 
     # метод post
     def post(self, *args, **kwargs):
-                
+
         form = CheckoutForms(self.request.POST or None)  # получение формы (либо запрос Post, лиюо никакого)
     
         # попытка получить заказ определенного юзера
@@ -208,3 +234,41 @@ class CheckoutView(View):
         }
 
         return render(self.request, 'checkout_page.html', context=context)
+
+
+def show_category(request, cat_id):
+
+    items = Item.objects.filter(cat_id=cat_id)
+    categories = Category.objects.all()
+ 
+    if len(items) == 0:
+        raise Http404
+
+
+    context = {
+        'items': items,
+        'menu': menu,
+        'title': 'Отображение по категориям',
+        'cats': categories,
+        'cat_selected': cat_id,
+    }
+
+    return render(request, 'items_page.html', context=context)
+
+
+def get_items(request):
+    
+    items = Item.objects.all()
+    cats = Category.objects.all()
+ 
+    context = {
+        'items': items,
+        'menu': menu,
+        'title': 'Товары',
+        'cats': cats,
+        'title': 'Категории',
+        'cat_selected': 0,
+    }
+ 
+    return render(request, 'items_page.html', context=context)
+

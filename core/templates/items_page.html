@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <!--карта товара-->
+  <section class="main-content">
+    <div class="container">
+       <div class="row">
+           {% for i in items %}
+           <div class="col-lg-4 col-sm-6">
+               <div class="product-card">
+                   <div class="product-thumb">
+                       {% if i.image %}
+                       <a href="#"><img src="{{ i.image.url }}"></a>
+                       {% endif %}
+                   </div>
+                   <div class="product-details">
+                       <h4><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></h4>
+                       <p>
+                           {{ i.description }}
+                       </p>
+                       <div class="product-bottom-details d-flex justify-content-between">
+                           <div class="product-price">
+                               {{ i.price }}
+                           </div>
+                           <div class="product-links">
+                               <a href="#"><i class="fa-solid fa-heart"></i></a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           {% endfor %}
+       </div>
+    </div>
+</section>
+
+{% endblock %}

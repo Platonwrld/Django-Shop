@@ -26,7 +26,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('сategory', kwargs={'cat_id': self.pk}) 
+        return reverse('category', kwargs={'cat_id': self.pk}) 
 
 
 # will be in items list
@@ -113,15 +113,11 @@ class Order(models.Model):
 
 class Address(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)      
     last_name = models.CharField(max_length=100)
-
     street_address = models.CharField(max_length=100)
     street_address_optional = models.CharField(max_length=100)
-
     country = CountryField(multiple=False)
 
     def __str__(self):

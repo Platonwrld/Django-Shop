@@ -19,9 +19,12 @@ from django.urls import path, include
 from itmagazine import settings
 from django.conf.urls.static import static
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls'))
+    path('', include('core.urls')),
+    path('accounts/', include('allauth.urls'))
 ]
 
 if settings.DEBUG:      #для того, чтобы в режиме отладки ко всем маршрутам добавлялся маршрут с графическими файлами

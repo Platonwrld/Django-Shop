@@ -1,3 +1,5 @@
+{% load cart_template_tag %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +18,12 @@
     <link rel="stylesheet" href="/static/core/css/main.css">
     <title>Hello</title>
 </head>
-<body>
+<body style="">
 
+<div class="wrap" style="overflow: hidden;
+                          display: flex;
+                          flex-direction: column;
+                          min-height: 100vh;">
     <!--Это навигационная панель-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -28,44 +34,74 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Товары</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'items-page' %}">Товары</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Фильтры</a>
-              </li>
-              
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Категории
                 </a>
+
+
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+
+                  {% if cat_selected == 0 %}
+                      <li class="selected"><a class="dropdown-item" href="{% url 'items-page' %}">Все категории</a></li>
+                      {% else %}
+                      <li class="selected"><a class="dropdown-item" href="{% url 'items-page' %}">Все категории</a></li>
+                  {% endif %}
+
+                    {% for c in cats %}
+                        {% if c.pk == cat_selected %}
+                        <li class="selected"><a class="dropdown-item">{{ c.name }}</a></li>
+                      {% else %}
+                        <li><a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
                 </ul>
+
               </li>
             </ul> 
-        
+
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-user"></i></a>
-              </li>
-              <li class="nav-item">
+              <div class="search">
+                <form action="{% url 'search' %}" style="margin-left: auto;" class="d-flex" method="get">
+                  <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+              <!-- логика для входа и выхода на главной странице -->
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'summary-page' %}"><i class="fa-solid fa-cart-shopping"></i></a>
+                  <a class="nav-link active dropdown-toggle"  data-bs-toggle="dropdown" aria-current="page" href="#"><i class="fa-solid fa-user"></i></a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'account_login' %}">Вход</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_logout' %}">Выход</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_signup'%}">Регстрация</a></li>
+                  </ul>
                 </li>
-            </ul> 
+              <!-- конец логики для иконки юзер -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link active" aria-current="page" href="{% url 'summary-page' %}"><span class="badge red z-depth-1 mr-1"></span><i class="fa-solid fa-cart-shopping"></i><span class="clearfix d-none d-sm-inline-block"></span></a>
+                </li>
+              </ul> 
+              <p class="total-cart" style="
+              color:#fff;
+              width: 20px;
+              height: 25px;
+              border-radius: 50%;
+              font-size: 14px;">{{ request.user|cart_item_count }}</p>
           </div>
         </div>
       </nav>
       
 
+
+
       {% block content %}
       {% endblock content %}
 
-      <!-- Начало футера -->
-      <footer>
+              <!-- Начало футера -->
+      <footer style="margin-top: auto;">
         <section class="footer">
           <div class="container">
             <div class="row">
@@ -109,8 +145,7 @@
           </div>
         </section>
       </footer>
-      
-
+    </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
 </body>
 </html>

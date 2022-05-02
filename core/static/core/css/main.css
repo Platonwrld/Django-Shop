@@ -1,5 +1,7 @@
 html {
     font-size: 18px; /*размер шрифта для заголовка*/
+    height: 100%;
+    margin: 0;
 }
 
 body {
@@ -10,6 +12,15 @@ body {
     background-color: #fff;
     min-width: 320px;   /*минимальная ширина блоков*/
 }
+
+.wrap {
+    position:fixed; /*Отсоединяем контейнер от страницы и фиксируем в окне браузера*/
+    width: 100%;   /*Ширина на все окно браузера*/
+    height: 100%;  /*Высота на все окно браузера*/
+    background-color: pink;
+    display: flex; /*Превращаем контейнер в flexBox*/
+    flex-direction: column; /*Расставляем дочерние элементы по вертикали*/
+  }
 
 img {
     max-width: 100%;
@@ -42,6 +53,11 @@ a {
 .modal-body img {
     max-width: 100px;
 }
+
+.d-flex {
+    text-align: right;
+}
+
 /*header*/
 
 
@@ -131,9 +147,7 @@ a {
 
 /* footer */
 .footer {
-    background-color: #343434;
-    margin-top: 377px
-    
+    background-color: #666;
 }
 
 .footer h4 {
