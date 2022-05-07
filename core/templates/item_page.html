@@ -31,7 +31,6 @@
             <div class="col-md-9 abc">
                 <h1>{{ item.title }}</h1>
             </div>
-            <div class="col-md-3 text-right pqr"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
             <p class="text-right para">{{ item.price }}</p>
         </div>
     </div>
@@ -52,7 +51,6 @@
         
           <div class="product-links">
             <a href="{{ item.get_add_to_cart }}"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a href="#"><i class="fa-solid fa-heart"></i></a>
             <a href="{{ item.remove_from_cart }}"><i class="fa-solid fa-circle-minus"></i></a>
           </div>             
     </div>

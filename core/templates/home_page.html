@@ -77,7 +77,7 @@
                                 {{ i.price }}
                             </div>
                             <div class="product-links">
-                                <a href="#"><i class="fa-solid fa-heart"></i></a>
+                              <a href="{{ i.get_add_to_cart }}"><i class="fa-solid fa-cart-shopping"></i></a>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
  </section>
 
  {% if is_paginated %}
- <nav aria-label="Page navigation example">
+ <nav aria-label="Page navigation example" style="margin-bottom: -300px;">
   <ul class="pagination justify-content-center">
     {% if page_obj.has_previous %}
     <li class="page-item">

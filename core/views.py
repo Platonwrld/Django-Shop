@@ -41,10 +41,9 @@ class Search(ListView):
 
     model = Item
 
-    template_name = 'home_page.html'
+    template_name = 'items_page.html'
     paginate_by = 6
     context_object_name = 'items' 
-
 
     def get_queryset(self):
         return Item.objects.filter(title__icontains=self.request.GET.get("q"))
@@ -53,6 +52,8 @@ class Search(ListView):
         context = super().get_context_data(*args, **kwargs)
         context["q"] = f'q={self.request.GET.get("q")}&'
         return context
+
+
 
 
 def item_page(request, item_slug):

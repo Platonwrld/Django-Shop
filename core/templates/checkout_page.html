@@ -170,12 +170,14 @@
               <div>
                 <h6 class="my-0">{{ order_item.item.title }}</h6>
                 <small class="text-muted">{{ order_item.item.description }}</small>
+                <hr>
+                <h6 class="my-0">{{ order_item.quantity }} шт.</h6>
               </div>
-              <span class="text-muted">{{ order_item.get_final_price }}</span>
+              <span class="text-muted">{{ order_item.get_final_price | linebreaks}}</span>
             </li>
             {% endfor %}
-            <li class="list-group-item d-flex justify-content-between bg-light">
-            </li>
+            <!-- <li class="list-group-item d-flex justify-content-between bg-light">
+            </li> -->
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (RUB)</span>
               <strong>{{ order.get_total }}</strong>

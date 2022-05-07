@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Главная страница</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,10 +20,10 @@
 </head>
 <body style="">
 
-<div class="wrap" style="overflow: hidden;
-                          display: flex;
-                          flex-direction: column;
-                          min-height: 100vh;">
+  <div class="wrap" style="overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;">
     <!--Это навигационная панель-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -76,7 +76,7 @@
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="{% url 'account_login' %}">Вход</a></li>
                     <li><a class="dropdown-item" href="{% url 'account_logout' %}">Выход</a></li>
-                    <li><a class="dropdown-item" href="{% url 'account_signup'%}">Регстрация</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_signup'%}">Регистрация</a></li>
                   </ul>
                 </li>
               <!-- конец логики для иконки юзер -->
@@ -145,7 +145,8 @@
           </div>
         </section>
       </footer>
-    </div>
+      </div>
+  
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
 </body>
 </html>

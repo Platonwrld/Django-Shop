@@ -24,8 +24,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
-    path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls.jwt')),  # после сериалайзера
 ]
 
-if settings.DEBUG:      #для того, чтобы в режиме отладки ко всем маршрутам добавлялся маршрут с графическими файлами
+if settings.DEBUG : #для того, чтобы в режиме отладки ко всем маршрутам добавлялся маршрут с графическими файлами
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
