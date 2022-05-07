@@ -3,7 +3,7 @@
 
 ___
 ## Quick Demo
-
+![](https://github.com/Platonwrld/Django-Shop/blob/main/screens/readygif.gif)
 ___
 
 ## ProjectSummary
