@@ -1,6 +1,9 @@
 # Django It-Ground Magazine
 ### This is a very simple e-commerce website built with Django.
-
+### Technology stack
+#### Django
+#### HTML/CSS
+#### Celery
 ___
 ## Quick Demo
 ![](https://github.com/Platonwrld/Django-Shop/blob/main/screens/readygif.gif)
