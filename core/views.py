@@ -1,16 +1,20 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from requests import request
+
+from core.tasks import send_spam_email
 from .models import *
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView, CreateView
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import *
 from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+from .service import *
+# from .tasks import send_spam_email
 
 
 menu = [{'title': 'It-Ground', 'url_name': 'home_page'},
@@ -273,3 +277,18 @@ def get_items(request):
  
     return render(request, 'items_page.html', context=context)
 
+
+class ContactView(CreateView):
+
+    model = Contact
+    form_class = ContactForm
+    template_name = 'emailsp.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+
+        form.save()
+        # send(form.instance.email)
+        send_spam_email.delay(form.instance.email)      # delay сообщает, что надо запустить таск и идти далее по программе, не дожидаясь результата
+
+        return super().form_valid(form)

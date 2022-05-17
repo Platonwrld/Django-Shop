@@ -22,12 +22,13 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('accounts/', include('allauth.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-    path('auth/', include('djoser.urls.jwt')),  # после сериалайзера
+    path('auth/', include('djoser.urls.jwt')), 
 ]
 
 if settings.DEBUG : #для того, чтобы в режиме отладки ко всем маршрутам добавлялся маршрут с графическими файлами

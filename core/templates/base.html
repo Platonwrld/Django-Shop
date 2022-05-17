@@ -1,5 +1,6 @@
 {% load cart_template_tag %}
-{% load static %}
+{% load static recaptcha3 %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +18,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css" integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/core/css/main.css">
     <title>Hello</title>
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
 </head>
-<body style="">
+<body>
 
   <div class="wrap" style="overflow: hidden;
   display: flex;
@@ -41,7 +44,7 @@
                   Категории
                 </a>
 
-
+              </div>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                   {% if cat_selected == 0 %}
@@ -89,18 +92,15 @@
               width: 20px;
               height: 25px;
               border-radius: 50%;
-              font-size: 14px;">{{ request.user|cart_item_count }}</p>
+              font-size: 14px;"></p>
           </div>
-        </div>
       </nav>
       
-
-
 
       {% block content %}
       {% endblock content %}
 
-              <!-- Начало футера -->
+      <!-- Начало футера -->
       <footer style="margin-top: auto;">
         <section class="footer">
           <div class="container">
@@ -139,6 +139,7 @@
                   <a href="vk.com"><i class="fa-brands fa-vk"></i></a>
                   <a href="instagram.org"><i class="fa-brands fa-instagram"></i></a>
                   <a href="telegram.com"><i class="fa-brands fa-telegram"></i></a>
+                  <a href="{% url 'contact' %}"><i class="fa-solid fa-envelope">Подпишись на нашу рассылку!</i></a>
                 </div>
               </div>
             </div>

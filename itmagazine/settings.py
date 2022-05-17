@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,12 +55,13 @@ INSTALLED_APPS = [
 
     'djoser',
     
-    # 'rest_framework.authtoken',
+    #'rest_framework.authtoken',
 
     'rest_framework_simplejwt',
 
     'django_countries',
-    
+    'snowpenguin.django.recaptcha3',
+
     'crispy_forms',
     
     'core',
@@ -225,11 +227,27 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USERNAME_REQUIRED = False
 
-#EMAIL_BACKEND = 'django.core.mail.backends.EmailBackend'
+
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'danilnikitin9696@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ujhtdfnm2002'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# RECAPTCHA_PUBLIC_KEY = '6Ldm4dsfAAAAAMHjhytNUHElgYUo8ni5mYXcMYhC'
+# RECAPTCHA_PRIVATE_KEY = '6Ldm4dsfAAAAAN7EuVsheXXtO62E8a8kG44uL5-A '
+RECAPTCHA_DEFAULT_ACTION = 'generic'
+RECAPTCHA_SCORE_THRESHOLD = 0.5
+
+
+""" REDIS SETTINGS """
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERUALIZER = 'json'

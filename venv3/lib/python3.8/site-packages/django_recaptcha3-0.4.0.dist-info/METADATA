@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: django-recaptcha3
+Version: 0.4.0
+Summary: Django reCaptcha v3 field/widget
+Home-page: https://github.com/kbytesys/django-recaptcha3
+Author: Andrea Briganti
+Author-email: kbytesys@gmail.com
+License: GNU LGPL v2
+Download-URL: https://github.com/kbytesys/django-recaptcha3/tarball/v0.4.0
+Keywords: django,recaptcha,recaptcha3
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 1.8
+Classifier: Framework :: Django :: 1.9
+Classifier: Framework :: Django :: 1.10
+Classifier: Framework :: Django :: 1.11
+Classifier: Framework :: Django :: 2.0
+Classifier: Framework :: Django :: 2.1
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: requests
+
+This integration app implements a reCAPTCHA support for Google reCAPTCHA v3.
+
+

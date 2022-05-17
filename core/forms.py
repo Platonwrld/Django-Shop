@@ -1,5 +1,7 @@
+from dataclasses import field
 from secrets import choice
 from django import forms 
+from .models import *
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
@@ -37,3 +39,10 @@ class CheckoutForms(forms.Form):
         'placeholder': 'Save',
     }))
     payment_options = forms.ChoiceField(widget=forms.RadioSelect, choices=PAYMENT_CHOICES)
+
+
+class ContactForm(forms.ModelForm):
+
+    class Meta:
+        model = Contact
+        fields = '__all__'

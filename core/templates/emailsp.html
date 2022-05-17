@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<form method="post" action="{% url 'contact' %}" style="margin-top: 30px; margin-left: 15px;">
+    {% csrf_token %}
+    <div class="subscribe">
+        <h2>Subscribe to our Newsletter</h2>
+    </div>
+    {{ form.as_p }}
+    <button type="submit" style="background-color: #666; color: white; border: none; margin-top: 16px; width: 5%;
+    padding: 3px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid rgb(255, 255, 255);
+    box-sizing: border-box;">Send</button>
+</form>
+
+{% endblock content %}

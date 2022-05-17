@@ -172,8 +172,8 @@
                 <small class="text-muted">{{ order_item.item.description }}</small>
                 <hr>
                 <h6 class="my-0">{{ order_item.quantity }} шт.</h6>
+                <span class="text-muted">{{ order_item.get_final_price | linebreaks}}</span>
               </div>
-              <span class="text-muted">{{ order_item.get_final_price | linebreaks}}</span>
             </li>
             {% endfor %}
             <!-- <li class="list-group-item d-flex justify-content-between bg-light">

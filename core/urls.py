@@ -13,4 +13,5 @@ urlpatterns = [
     path('category/<int:cat_id>/', show_category, name='category'),
     path('items/', get_items, name='items-page'),
     path("search/", Search.as_view(), name='search'),
+    path('contact/', ContactView.as_view(), name='contact')
 ]
